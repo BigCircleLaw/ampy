@@ -83,7 +83,7 @@ def windows_full_port_name(portname):
     help="Delay in seconds before entering RAW MODE (default 0). Can optionally specify with AMPY_DELAY environment variable.",
     metavar="DELAY",
 )
-@click.version_option()
+@click.version_option('1.1.0')
 def cli(port, baud, delay):
     """ampy - Adafruit MicroPython Tool
 
@@ -413,6 +413,11 @@ def reset(mode):
         # serial when restarted via microcontroller.reset()
         pass
 
+@cli.command()
+def version():
+    # Delete the provided file/directory on the board.
+    board_files = files.Files(_board)
+    print('Board firmware version is', board_files.version())
 
 if __name__ == "__main__":
     try:
