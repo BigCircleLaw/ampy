@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from setuptools import setup, find_packages
+# from setuptools import setup, find_packages
 
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
@@ -33,8 +33,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='adafruit-ampy',
-
+    name='wonderbits-ampy',
+    # version = '1.0.0',
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
 
@@ -43,11 +43,11 @@ setup(
     long_description_content_type='text/markdown',
 
     # The project's main homepage.
-    url='https://github.com/adafruit/ampy',
+    url='https://github.com/BigCircleLaw/ampy',
 
     # Author details
-    author='Adafruit Industries',
-    author_email='circuitpython@adafruit.com',
+    author='mfe',
+    author_email='794557226@qq.com',
 
     install_requires=['click', 'pyserial', 'python-dotenv'],
 
@@ -75,7 +75,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'ampy=ampy.cli:cli',
+            'wb_ampy=ampy.cli:cli',
         ],
     },
 )

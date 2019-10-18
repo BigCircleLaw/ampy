@@ -419,6 +419,7 @@ if __name__ == "__main__":
         cli()
     finally:
         # Try to ensure the board serial connection is always gracefully closed.
+        # print('___________________________*****************************______________________')
         if _board is not None:
             try:
                 _board.close()
