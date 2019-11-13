@@ -83,7 +83,7 @@ def windows_full_port_name(portname):
     help="Delay in seconds before entering RAW MODE (default 0). Can optionally specify with AMPY_DELAY environment variable.",
     metavar="DELAY",
 )
-@click.version_option('1.1.0')
+@click.version_option('1.1.1')
 def cli(port, baud, delay):
     """ampy - Adafruit MicroPython Tool
 
@@ -248,9 +248,15 @@ def put(local, remote):
                 board_files.mkdir(remote_parent)
                 # Loop through all the files and put them on the board too.
                 for filename in child_files:
-                    with open(os.path.join(parent, filename), "rb") as infile:
-                        remote_filename = posixpath.join(remote_parent, filename)
-                        board_files.put(remote_filename, infile.read())
+                    try:
+                        with open(os.path.join(parent, filename), "r", encoding = 'utf-8') as infile:
+                            out_content = infile.read().encode('GB2312')
+                    except:
+                        with open(os.path.join(parent, filename), "rb") as infile:
+                            out_content = infile.read()
+                    # with open(os.path.join(parent, filename), "r") as infile:
+                    remote_filename = posixpath.join(remote_parent, filename)
+                    board_files.put(remote_filename, out_content)
             except files.DirectoryExistsError:
                 # Ignore errors for directories that already exist.
                 pass
@@ -258,9 +264,18 @@ def put(local, remote):
     else:
         # File copy, open the file and copy its contents to the board.
         # Put the file on the board.
-        with open(local, "rb") as infile:
-            board_files = files.Files(_board)
-            board_files.put(remote, infile.read())
+        try:
+            with open(local, "r", encoding = 'utf-8') as infile:
+                out_content = infile.read().encode('GB2312')
+            # print('open(r)')
+        except:
+            with open(local, "rb") as infile:
+                out_content = infile.read()
+            # print('open(rb)')
+        # with open(local, "r") as infile:
+        board_files = files.Files(_board)
+        board_files.put(remote, out_content)
+        # print(out_content)
 
 
 @cli.command()
