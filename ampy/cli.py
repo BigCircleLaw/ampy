@@ -268,10 +268,10 @@ def put(local, remote):
             with open(local, "r", encoding = 'utf-8') as infile:
                 out_content = infile.read().encode('GB2312')
             # print('open(r)')
-        except:
+        except Exception as e:
             with open(local, "rb") as infile:
                 out_content = infile.read()
-            # print('open(rb)')
+            # print('open(rb)',e)
         # with open(local, "r") as infile:
         board_files = files.Files(_board)
         board_files.put(remote, out_content)
