@@ -320,18 +320,10 @@ class Files(object):
             print(wonderbits.__version__)
         """
         self._pyboard.enter_raw_repl()
+        out = None
         try:
-            out = self._pyboard.exec_(textwrap.dedent(command))
-            return out.decode("utf-8")
+            out = self._pyboard.exec_(textwrap.dedent(command)).replace("\n", "").replace("\r", "")
         except PyboardError as ex:
-            message = ex.args[2].decode("utf-8")
-            # Check if this is an OSError #2, i.e. file/directory doesn't exist
-            # and rethrow it as something more descriptive.
-            if message.find("OSError: [Errno 2] ENOENT") != -1:
-                raise RuntimeError("No such file/directory: {0}".format(filename))
-            # Check for OSError #13, the directory isn't empty.
-            if message.find("OSError: [Errno 13] EACCES") != -1:
-                raise RuntimeError("Directory is not empty: {0}".format(filename))
-            else:
-                raise ex
+            raise ex
         self._pyboard.exit_raw_repl()
+        return out.decode("utf-8")
