@@ -319,11 +319,12 @@ class Files(object):
             import wonderbits
             print(wonderbits.__version__)
         """
-        self._pyboard.enter_raw_repl()
+        self._pyboard.enter_raw_repl_not_rest()
         out = None
         try:
-            out = self._pyboard.exec_(textwrap.dedent(command)).replace("\n", "").replace("\r", "")
+            out = self._pyboard.exec_(textwrap.dedent(command)).decode("utf-8")
+            out = out.replace("\n", "").replace("\r", "")
         except PyboardError as ex:
             raise ex
         self._pyboard.exit_raw_repl()
-        return out.decode("utf-8")
+        return out

@@ -35,6 +35,11 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+about = {}
+
+with open(os.path.join(here, 'ampy', '__version__.py')) as f:
+    exec(f.read(), about)
+
 class UploadCommand(Command):
     """Support setup.py upload."""
 
@@ -66,15 +71,15 @@ class UploadCommand(Command):
         os.system('twine upload dist/*')
 
         # self.status('Pushing git tags…')
-        # os.system('git tag v{0}'.format(about['__version__']))
-        # os.system('git push --tags')
+        os.system('git tag v{0}'.format(about['__version__']))
+        os.system('git push --tags')
 
         sys.exit()
 
 setup(
     name='wonderbits-ampy',
-    # version = '1.0.0',
-    use_scm_version=True,
+    version = about['__version__'],
+    # use_scm_version=True,
     setup_requires=['setuptools_scm'],
 
     description='ampy (Adafruit MicroPython tool) is a command line tool to interact with a CircuitPython or MicroPython board over a serial connection.',
