@@ -248,13 +248,15 @@ def put(local, remote):
                 board_files.mkdir(remote_parent)
                 # Loop through all the files and put them on the board too.
                 for filename in child_files:
-                    try:
-                        with open(os.path.join(parent, filename), "r", encoding = 'utf-8') as infile:
-                            out_content = infile.read().encode('GB2312')
-                    except:
-                        with open(os.path.join(parent, filename), "rb") as infile:
-                            out_content = infile.read()
-                    # with open(os.path.join(parent, filename), "r") as infile:
+                    # try:
+                    #     with open(os.path.join(parent, filename), "r", encoding = 'utf-8') as infile:
+                    #         out_content = infile.read().encode('GB2312')
+                    # except:
+                    #     with open(os.path.join(parent, filename), "rb") as infile:
+                    #         out_content = infile.read()
+                    # # with open(os.path.join(parent, filename), "r") as infile:
+                    with open(os.path.join(parent, filename), "rb") as infile:
+                        out_content = infile.read()
                     remote_filename = posixpath.join(remote_parent, filename)
                     board_files.put(remote_filename, out_content)
             except files.DirectoryExistsError:
@@ -264,15 +266,16 @@ def put(local, remote):
     else:
         # File copy, open the file and copy its contents to the board.
         # Put the file on the board.
-        try:
-            with open(local, "r", encoding = 'utf-8') as infile:
-                out_content = infile.read().encode('GB2312')
-            # print('open(r)')
-        except Exception as e:
-            with open(local, "rb") as infile:
-                out_content = infile.read()
-            # print('open(rb)',e)
-        # with open(local, "r") as infile:
+        # try:
+        #     with open(local, "r", encoding = 'utf-8') as infile:
+        #         out_content = infile.read().encode('GB2312')
+        #     # print('open(r)')
+        # except Exception as e:
+        #     with open(local, "rb") as infile:
+        #         out_content = infile.read()
+        #     # print('open(rb)',e)
+        with open(local, "rb") as infile:
+            out_content = infile.read()
         board_files = files.Files(_board)
         board_files.put(remote, out_content)
         # print(out_content)

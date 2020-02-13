@@ -304,12 +304,14 @@ class Files(object):
         else:
             # Read the file and run it using lower level pyboard functions that
             # won't wait for it to finish or return output.
-            try:
-                with open(filename, "r", encoding = 'utf-8') as infile:
-                    out_content = infile.read().encode('GB2312')
-            except:
-                with open(filename, "rb") as infile:
-                    out_content = infile.read()
+            # try:
+            #     with open(filename, "r", encoding = 'utf-8') as infile:
+            #         out_content = infile.read().encode('GB2312')
+            # except:
+            #     with open(filename, "rb") as infile:
+            #         out_content = infile.read()
+            with open(filename, "rb") as infile:
+                out_content = infile.read()
             self._pyboard.exec_raw_no_follow(out_content)
         self._pyboard.exit_raw_repl()
         return out
