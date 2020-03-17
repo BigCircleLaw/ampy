@@ -203,7 +203,7 @@ class Pyboard:
             self.serial.write(command)
             time.sleep(0.01)
 
-        time.sleep(0.1)
+        # time.sleep(0.5)
         # flush input (without relying on serial.flushInput())
         n = self.serial.inWaiting()
         while n > 0:
